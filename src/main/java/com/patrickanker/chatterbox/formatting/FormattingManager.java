@@ -27,7 +27,6 @@ import com.google.common.collect.Multimap;
 import com.patrickanker.chatterbox.messenger.Messenger;
 import com.patrickanker.chatterbox.util.Debugger;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -74,19 +73,10 @@ public final class FormattingManager {
   }
   
   // As opposed to the event system, this bit is semi-synchronous
-  public String call(String event, String message, Messenger messenger, String targetUUID) {
+  public Future<String> call(String event, String message, Messenger messenger, String targetUUID) {
     ExecutorService executor = Executors.newCachedThreadPool();
     
-    Future future = executor.submit(new FormattingEventCallable(event, message, messenger, targetUUID));
-    String out = null;
-    
-    try {
-      out = future.get().toString();
-    } catch (ExecutionException | InterruptedException e) {
-      Debugger.debug("Error processing formatters: " + e.getMessage());
-    }
-    
-    return out;
+    return ((Future<String>) executor.submit(new FormattingEventCallable(event, message, messenger, targetUUID)));
   }
   
   class FormattingEventCallable implements Callable {
