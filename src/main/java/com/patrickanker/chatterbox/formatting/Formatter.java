@@ -20,31 +20,31 @@
  * THE SOFTWARE.
  */
 
-package com.patrickanker.chatterbox;
+package com.patrickanker.chatterbox.formatting;
 
-public class Chatterbox {
+import com.patrickanker.chatterbox.messenger.Messenger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-  private static Chatterbox singleton;
+
+public abstract class Formatter {
+
+  private static final String colourRegex = "&[A-Fa-fK-Ok-oRr0-9]";
   
-  private final String workingDirectory;
+  public abstract String format(String message, Messenger messenger, String targetUUID);
   
-  public Chatterbox(String cwd) {
-    // Various necessary class initialisations in here
+  public static String colourise(String input) {
+    String colourised = input;
     
-    this.workingDirectory = cwd;
+    Pattern pattern = Pattern.compile(colourRegex);
+    Matcher match = pattern.matcher(colourised);
     
-    singleton = this; // THIS MUST BE LAST
-  }
-  
-  public static void boot() {
-    // Boots up Chatterbox
-  }
-  
-  public static void shutdown() {
-    // Safely shut Chatterbox down
-  }
-  
-  public static String getWorkingDirectory() {
-    return singleton.workingDirectory;
+    while (match.find()) {
+      String found = match.group();
+      found = found.replace("&", "§");
+      colourised = match.replaceAll(found);
+    }
+    
+    return colourised;
   }
 }

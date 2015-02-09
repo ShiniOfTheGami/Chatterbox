@@ -24,5 +24,4 @@ package com.patrickanker.chatterbox.channel;
 
 public interface ChannelManager<C> {
   
-  
 }
