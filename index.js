@@ -1,0 +1,1 @@
+// Boot script for chat server -- redirects to the main boot scripts

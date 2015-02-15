@@ -1,0 +1,16 @@
+{
+  "browser" : false,
+  "camelcase" : true,
+  "globalstrict": true,
+  "indent" : 2,
+  "newcap" : true,
+  "node" : true,
+  "quotmark": true,
+  "strict" : false,
+  "undef" : true,
+  "predef" : [ "-Promise" ],
+
+  "globals" : { // Dirty, dirty, dirty, DIRTY fix
+    "Promise" : true
+  }
+}
