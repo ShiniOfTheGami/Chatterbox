@@ -98,7 +98,7 @@ public final class FormattingManager {
       String copy = message;
       
       for (Formatter formatter : activeFormatters.get(event)) {
-        copy = formatter.format(message, messenger, targetUUID);
+        copy = formatter.format(copy, messenger, targetUUID);
       }
       
       return copy;
