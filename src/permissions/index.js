@@ -1,5 +1,6 @@
 var _                  = require('lodash'),
-    Promise            =
+    Promise            = require('bluebird'),
+    Logger             = require("../util/logger.js"),
     PermissionsManager;
 
 PermissionsManager = (function () {
