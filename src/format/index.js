@@ -8,7 +8,8 @@ var _                  = require('lodash'),
 
 FormattingManager = (function () {
   
-  var activeFormatters = {};
+  var activeFormatters = {},
+      self             = this; // Retain reference to preserve scope
 
   return {
     
@@ -30,14 +31,14 @@ FormattingManager = (function () {
         return; 
       }
 
-      if (!_.has(activeFormatters, event)) {
-        activeFormatters[event] = [];
-        activeFormatters[event].push(method);
+      if (!_.has(self.activeFormatters, event)) {
+        self.activeFormatters[event] = [];
+        self.activeFormatters[event].push(method);
       } else {
-        if (_.includes(activeFormatters[event], method)) {
+        if (_.includes(self.activeFormatters[event], method)) {
           Logger.warn('Attempted to insert duplicate formatting event method');
         } else {
-          activeFormatters[event].push(method);
+          self.activeFormatters[event].push(method);
         }
       }
     },
@@ -58,7 +59,7 @@ FormattingManager = (function () {
 
       var editedMessage = object.message;
 
-      for (var method in activeFormatters[object.event]) {
+      for (var method in self.activeFormatters[object.event]) {
         var methodRes = method(object.message, object.messenger, object.targetChannel);
 
         if (!_.isString(methodRes)) {

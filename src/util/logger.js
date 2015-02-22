@@ -1,18 +1,18 @@
-var clc = require ('cli-clc'),
-
+var chalk = require ('chalk'),
     Logger,
     Colors;
 
 Colors = {
-  info : clc.green,
-  warn : clc.yellow,
-  error : clc.red.bold,
-  debug : clc.white
+  info : chalk.green,
+  warn : chalk.yellow,
+  error : chalk.red.bold,
+  debug : chalk.white
 };
 
 Logger = function (_prefix, _activated) {
-  var prefix         = _prefix || '',
-      debugActivated = _activated || false;
+  var self           =  this,
+      prefix         = self.prefix = _prefix || '',
+      debugActivated = self.debugActivated = _activated || false;
 
   return {
     debug: function (message) {
